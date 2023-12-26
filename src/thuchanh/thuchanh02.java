@@ -71,14 +71,7 @@ public class thuchanh02 {
         WebDriverWait wait = new WebDriverWait(driver, 10L);
         List<WebElement> statusOptions = (List)wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//div[@class='status-option']")));
         Iterator var9 = statusOptions.iterator();
-
-        while(var9.hasNext()) {
-            WebElement option = (WebElement)var9.next();
-            if (option.getText().equalsIgnoreCase(newStatus)) {
-                option.click();
-                break;
-            }
+    
         }
-
     }
 }
