@@ -1,18 +1,23 @@
+package thuchanh;
 
-import java.util.Iterator;
-import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
+
+import java.util.Iterator;
+import java.util.List;
+
 
 public class thuchanh02 {
     public thuchanh02() {
     }
 
-    public static void main(String[] args) {
+    @Test
+    public void Test() {
         System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
         WebDriver driver = new ChromeDriver();
         driver.get("https://rise.fairsketch.com");
@@ -25,7 +30,7 @@ public class thuchanh02 {
         driver.quit();
     }
 
-    private static void login(WebDriver driver, String email, String password) {
+    private void login(WebDriver driver, String email, String password) {
         WebElement emailInput = driver.findElement(By.id("email"));
         emailInput.sendKeys(new CharSequence[]{email});
         WebElement passwordInput = driver.findElement(By.id("password"));
@@ -34,12 +39,12 @@ public class thuchanh02 {
         loginButton.click();
     }
 
-    private static void clickTaskMenu(WebDriver driver) {
+    private void clickTaskMenu(WebDriver driver) {
         WebElement taskMenu = driver.findElement(By.xpath("//a[contains(text(),'Task')]"));
         taskMenu.click();
     }
 
-    private static void addTask(WebDriver driver, String title, String description) {
+    private void addTask(WebDriver driver, String title, String description) {
         WebElement addTaskButton = driver.findElement(By.xpath("//button[contains(text(),'Add a task')]"));
         addTaskButton.click();
         WebElement titleInput = driver.findElement(By.id("taskTitle"));
@@ -50,7 +55,7 @@ public class thuchanh02 {
         saveButton.click();
     }
 
-    private static void searchTask(WebDriver driver, String taskTitle) {
+    private void searchTask(WebDriver driver, String taskTitle) {
         WebElement searchInput = driver.findElement(By.id("searchTaskInput"));
         searchInput.sendKeys(new CharSequence[]{taskTitle});
         WebDriverWait wait = new WebDriverWait(driver, 10L);
@@ -59,7 +64,7 @@ public class thuchanh02 {
         firstResult.click();
     }
 
-    private static void addCommentsAndChangeStatus(WebDriver driver, String comment1, String comment2, String newStatus) {
+    private void addCommentsAndChangeStatus(WebDriver driver, String comment1, String comment2, String newStatus) {
         WebElement commentInput = driver.findElement(By.id("commentInput"));
         commentInput.sendKeys(new CharSequence[]{comment1});
         WebElement addCommentButton = driver.findElement(By.id("addCommentButton"));
@@ -71,7 +76,14 @@ public class thuchanh02 {
         WebDriverWait wait = new WebDriverWait(driver, 10L);
         List<WebElement> statusOptions = (List)wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//div[@class='status-option']")));
         Iterator var9 = statusOptions.iterator();
-    
+
+        while(var9.hasNext()) {
+            WebElement option = (WebElement)var9.next();
+            if (option.getText().equalsIgnoreCase(newStatus)) {
+                option.click();
+                break;
+            }
         }
+
     }
 }
